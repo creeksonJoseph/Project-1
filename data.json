@@ -1,0 +1,18 @@
+[
+  {
+    "title": "AniFinder",
+    "brief": "An anime search app using the Jikan API.",
+    "image": "./pics/home.png",
+    "description": "AniFinder lets users search for anime by title and view details like synopsis, trailers, and where to stream. Built this with JavaScript and powered by JIKAN API a public api for anime.Main goal was to learn DOM manipulation and master the Full REST API CRUD operations",
+    "github": "https://github.com/creeksonJoseph/Anifinder",
+    "deployed": "https://creeksonjoseph.github.io/Anifinder/"
+  },
+  {
+    "title": "My Book Shelf",
+    "brief": "A personal digital bookshelf to manage book collection.",
+    "image": "https://github.com/creeksonJoseph/book-shelf-sdf-ft14",
+    "description": "My Book Shelf allows users to add, edit, and delete books from their collection. It uses a JSON server for backend and dynamic DOM manipulation for the UI.This was a school project we were given a template to use when learning DOM manipulation and the REST API CRUD operations",
+    "github": "https://github.com/creeksonJoseph/book-shelf-sdf-ft14",
+    "deployed": "d"
+  }
+]

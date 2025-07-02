@@ -13,7 +13,7 @@
       "id": 2,
       "title": "My Book Shelf",
       "brief": "A personal digital bookshelf to manage book collection.",
-      "image": "./pics/books.png",
+      "image": "./pics/book.png",
       "description": "My Book Shelf allows users to add, edit, and delete books from their collection. It uses a JSON server for backend and dynamic DOM manipulation for the UI.This was a school project we were given a template to use when learning DOM manipulation and the REST API CRUD operations",
       "github": "https://github.com/creeksonJoseph/book-shelf-sdf-ft14",
       "deployed": "https://creeksonjoseph.github.io/book-shelf-sdf-ft14/"

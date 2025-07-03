@@ -23,7 +23,7 @@ function showsmallCard(project) {
     <div class="p-4 space-y-2">
       <h1 class="text-xl font-semibold text-gray-500">${project.title}</h1>
       <p class="text-sm text-zinc-300">${project.brief}</p>
-      <button id="btn" class="bg-blue-400 text-cyan-50 rounded-3xl">view project</button>
+      <button id="btn" class="bg-blue-400 self-end text-cyan-50 rounded-3xl">view project</button>
     </div>
   `;
   btn = document.getElementById("btn");

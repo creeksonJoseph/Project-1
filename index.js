@@ -8,6 +8,10 @@ const url = `https://portfolio-server-sa2t.onrender.com/projects`;
 window.addEventListener("DOMContentLoaded", () => {
   fetch(`${url}`);
 });
+//warming up the bookshelf server
+window.addEventListener("DOMContentLoaded", () => {
+  fetch(`https://json-server-yp7e.onrender.com`);
+});
 
 projects.addEventListener("click", displayProjects);
 function showsmallCard(project) {
@@ -39,56 +43,74 @@ function showsmallCard(project) {
 
 function showBigCard(project) {
   (async () => {
-    const res = await fetch(`${url}/${project.id}`);
-    const data = await res.json();
-    //console.log(data);
-
-    const child = document.createElement("div");
-    child.innerHTML = `
-      <div class="min-h-screen w-full flex flex-col items-center justify-center p-6 bg-gradient-to-b from-gray-500 to-white text-black relative">
-        <button 
-          class="absolute top-6 left-6 px-4 py-2 bg-zinc-700 text-white rounded hover:bg-zinc-800 transition"
-          id="backToProjects"
-        >
-          ⬅️ Back
-        </button>
-        <img 
-          src="${data.image}" 
-          alt="${data.title}" 
-          class="w-full max-w-3xl object-cover rounded-lg mb-6"
-        />
-        <h1 class="text-3xl font-bold text-gray-900 text-center">${data.title}</h1>
-        <p class="text-gray-800 max-w-2xl  mt-4">${data.description}</p>
-        <div class="flex flex-wrap gap-4 mt-6">
-          <a 
-            href="${data.github}" 
-            target="_blank" 
-            class="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition"
-          >
-            <i class="fa-brands fa-github"></i> GitHub
-          </a>
-          <a 
-            href="${data.deployed}" 
-            target="_blank" 
-            class="px-4 py-2 bg-gray-900 text-white rounded hover:bg-gray-800 transition"
-          >
-            Live Demo
-          </a>
+    // show loading spinner
+    mainContent.innerHTML = `
+      <div class="min-h-screen flex items-center justify-center bg-white">
+        <div class="flex flex-col items-center gap-4">
+          <div class="animate-spin rounded-full h-12 w-12 border-4 border-blue-500 border-t-transparent"></div>
+          <p class="text-gray-600 text-lg font-medium">Loading project...</p>
         </div>
       </div>
     `;
 
-    mainContent.innerHTML = "";
-    mainContent.className = `
-      bg-gradient-to-b 
-      from-gray-500 
-      to-white
-    `;
-    mainContent.appendChild(child);
+    try {
+      const res = await fetch(`${url}/${project.id}`);
+      const data = await res.json();
 
-    document
-      .getElementById("backToProjects")
-      .addEventListener("click", displayProjects);
+      const child = document.createElement("div");
+      child.innerHTML = `
+        <div class="min-h-screen w-full flex flex-col items-center justify-center p-6 bg-gradient-to-b from-gray-500 to-white text-black relative">
+          <button 
+            class="absolute top-6 left-6 px-4 py-2 bg-zinc-700 text-white rounded hover:bg-zinc-800 transition"
+            id="backToProjects"
+          >
+            ⬅️ Back
+          </button>
+          <img 
+            src="${data.image}" 
+            alt="${data.title}" 
+            class="w-full max-w-3xl object-cover rounded-lg mb-6"
+          />
+          <h1 class="text-3xl font-bold text-gray-900 text-center">${data.title}</h1>
+          <p class="text-gray-800 max-w-2xl mt-4">${data.description}</p>
+          <div class="flex flex-wrap gap-4 mt-6">
+            <a 
+              href="${data.github}" 
+              target="_blank" 
+              class="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition"
+            >
+              <i class="fa-brands fa-github"></i> GitHub
+            </a>
+            <a 
+              href="${data.deployed}" 
+              target="_blank" 
+              class="px-4 py-2 bg-gray-900 text-white rounded hover:bg-gray-800 transition"
+            >
+              Live Demo
+            </a>
+          </div>
+        </div>
+      `;
+
+      mainContent.innerHTML = "";
+      mainContent.className = `
+        bg-gradient-to-b 
+        from-gray-500 
+        to-white
+      `;
+      mainContent.appendChild(child);
+
+      document
+        .getElementById("backToProjects")
+        .addEventListener("click", displayProjects);
+    } catch (error) {
+      console.error(error);
+      mainContent.innerHTML = `
+        <div class="min-h-screen flex items-center justify-center bg-white text-red-600 text-xl font-semibold">
+          ⚠️ Failed to load project. Please try again later.
+        </div>
+      `;
+    }
   })();
 }
 
@@ -141,13 +163,39 @@ function displayProjects() {
   `;
   mainContent.append(projectGrid);
 
+  // fetch and render projects
   (async () => {
     const res = await fetch(`${url}`);
-    const projects = await res.json();
-    projects.forEach((project) => {
-      const card = showsmallCard(project);
-      projectGrid.append(card);
+    const allProjects = await res.json();
+
+    // initial render
+    renderCards(allProjects);
+
+    // search filtering
+    searchInput.addEventListener("input", () => {
+      const term = searchInput.value.toLowerCase().trim();
+      const filtered = allProjects.filter((project) =>
+        project.title.toLowerCase().includes(term)
+      );
+
+      renderCards(filtered);
     });
+
+    function renderCards(projects) {
+      projectGrid.innerHTML = "";
+
+      if (projects.length === 0) {
+        projectGrid.innerHTML = `
+          <p class="text-gray-700 text-center w-full col-span-full">No projects found matching your search.</p>
+        `;
+        return;
+      }
+
+      projects.forEach((project) => {
+        const card = showsmallCard(project);
+        projectGrid.append(card);
+      });
+    }
   })();
 }
 

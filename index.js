@@ -10,7 +10,6 @@ window.addEventListener("DOMContentLoaded", () => {
 });
 
 projects.addEventListener("click", displayProjects);
-
 function showsmallCard(project) {
   const child = document.createElement("div");
   child.className = `
@@ -18,20 +17,23 @@ function showsmallCard(project) {
     transform hover:scale-105 transition-transform duration-200 cursor-pointer
     flex flex-col
   `;
+
   child.innerHTML = `
     <img src="${project.image}" alt="${project.title}" class="w-full h-48 object-cover rounded-t-2xl">
     <div class="p-4 space-y-2">
       <h1 class="text-xl font-semibold text-gray-500">${project.title}</h1>
       <p class="text-sm text-zinc-300">${project.brief}</p>
-      <button id="btn" class="bg-blue-400 self-end text-cyan-50 rounded-3xl">view project</button>
+      <button class="view-btn  self-end  text-sm bg-cyan-50 text-gray-900 rounded-3xl px-4 py-1 hover:bg-blue-400 hover:text-cyan-50">View project</button>
     </div>
   `;
-  btn = document.getElementById("btn");
-  btn.addEventListener("click", showBigCard);
 
-  child.addEventListener("click", () => {
+  // grab the button from within this card only
+  const btn = child.querySelector(".view-btn");
+  btn.addEventListener("click", (e) => {
+    e.stopPropagation();
     showBigCard(project);
   });
+
   return child;
 }
 

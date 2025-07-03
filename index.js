@@ -1,22 +1,29 @@
 const projects = document.getElementById("projects");
-const contacts = document.getElementById("contacts");
 const parent = document.getElementById("parent");
 
 projects.addEventListener("click", displayProjects);
-// contacts.addEventListener("click", showContacts);
+contacts.addEventListener("click", showContacts);
 
 //function to display one project
 function showsmallCard(project) {
   const child = document.createElement("div");
-  child.innerHTML = `<div class="child"> 
-    <img src="${project.image}" alt ="${project.title}"></img>
-    <h1>${project.title}</h1>
-    <p>${project.brief}</p>
+
+  child.className = `
+    bg-gray-900 text-gray-200   overflow-hidden 
+    transform hover:scale-105 transition-transform duration-200 cursor-pointer
+    flex flex-col
+  `;
+
+  child.innerHTML = `
+    <img src="${project.image}" alt="${project.title}" class="w-full h-48 object-cover rounded-t-2xl">
+    <div class="p-4 space-y-2">
+      <h1 class="text-xl font-semibold text-gray-500">${project.title}</h1>
+      <p class="text-sm text-zinc-300">${project.brief}</p>
     </div>
-    `;
+  `;
 
   parent.append(child);
-  smallCard = document.getElementById("smallCard");
+
   child.addEventListener("click", () => {
     showBigCard(project);
   });
@@ -46,6 +53,10 @@ function showBigCard(project) {
 //function to fetch and display all projects
 function displayProjects() {
   parent.innerHTML = "";
+
+  parent.className =
+    "grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 p-4";
+
   (async () => {
     const res = await fetch("http://localhost:3003/projects");
     const projects = await res.json();

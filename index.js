@@ -2,7 +2,7 @@ const projects = document.getElementById("projects");
 const parent = document.getElementById("parent");
 const mainContent = document.getElementById("mainContent");
 const staticContent = document.getElementById("staticContent");
-const url = `http://localhost:3003/projects`;
+const url = `https://portfolio-server-sa2t.onrender.com/projects`;
 
 projects.addEventListener("click", displayProjects);
 

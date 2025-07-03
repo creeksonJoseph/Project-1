@@ -1,18 +1,15 @@
 {
-  "dependencies": {
-    "@tailwindcss/cli": "^4.1.8",
-    "tailwindcss": "^4.1.8"
-  }
-}
-{
   "name": "json-api",
   "version": "1.0.0",
-  "description": "Deployed JSON server on Cyclic",
+  "description": "Deployed JSON server on railways.io with Tailwind support",
   "main": "index.js",
   "scripts": {
-    "start": "json-server --watch data.json --port $PORT"
+    "start": "json-server --watch data.json --port $PORT",
+    "build:css": "tailwindcss -i ./css/input.css -o ./css/output.css --watch"
   },
   "dependencies": {
+    "@tailwindcss/cli": "^4.1.8",
+    "tailwindcss": "^4.1.8",
     "json-server": "^0.17.3"
   }
 }

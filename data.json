@@ -2,10 +2,10 @@
   "projects": [
     {
       "id": 1,
-      "title": "AniFinder",
+      "title": "AniHaven",
       "brief": "An anime search app using the Jikan API.",
       "image": "./pics/home.png",
-      "description": "AniFinder lets users search for anime by title and view details like synopsis, trailers, and where to stream. Built this with JavaScript and powered by JIKAN API a public api for anime.Main goal was to learn DOM manipulation and master the Full REST API CRUD operations",
+      "description": "AniFinder lets users search for anime by title and view details like synopsis, trailers, and where to stream. Built this with JavaScript and powered by JIKAN API, a public API for anime.Main goal was to learn DOM manipulation and master the Full REST API CRUD operations",
       "github": "https://github.com/creeksonJoseph/Anifinder",
       "deployed": "https://creeksonjoseph.github.io/Anifinder/"
     },

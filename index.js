@@ -4,6 +4,11 @@ const mainContent = document.getElementById("mainContent");
 const staticContent = document.getElementById("staticContent");
 const url = `https://portfolio-server-sa2t.onrender.com/projects`;
 
+//warming up the server
+window.addEventListener("DOMContentLoaded", () => {
+  fetch(`${url}`);
+});
+
 projects.addEventListener("click", displayProjects);
 
 function showsmallCard(project) {
@@ -30,7 +35,7 @@ function showBigCard(project) {
   (async () => {
     const res = await fetch(`${url}/${project.id}`);
     const data = await res.json();
-    console.log(data);
+    //console.log(data);
 
     const child = document.createElement("div");
     child.innerHTML = `

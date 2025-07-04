@@ -14,6 +14,7 @@ window.addEventListener("DOMContentLoaded", () => {
 });
 
 projects.addEventListener("click", displayProjects);
+//show one card with the projects summary
 function showsmallCard(project) {
   const child = document.createElement("div");
   child.className = `
@@ -40,7 +41,7 @@ function showsmallCard(project) {
 
   return child;
 }
-
+//show more on one project that is clicked
 function showBigCard(project) {
   (async () => {
     // show loading spinner
@@ -113,10 +114,10 @@ function showBigCard(project) {
     }
   })();
 }
-
+//list all projects
 function displayProjects() {
   staticContent.style.display = "none";
-  mainContent.innerHTML = "";
+
   mainContent.className = `
     min-h-screen 
     bg-gradient-to-b 
@@ -126,52 +127,63 @@ function displayProjects() {
     space-y-6
   `;
 
-  const controls = document.createElement("div");
-  controls.className = "flex justify-between items-center gap-4 flex-wrap";
-
-  const backBtn = document.createElement("button");
-  backBtn.textContent = "⬅️ Back";
-  backBtn.className =
-    "px-4 py-2 bg-zinc-700 text-white rounded hover:bg-zinc-600";
-  backBtn.addEventListener("click", restoreProfileLayout);
-
-  const searchInput = document.createElement("input");
-  searchInput.placeholder = "Search projects...";
-  searchInput.className =
-    "flex-1 px-4 py-2 rounded bg-zinc-800 text-white border border-zinc-600";
-
-  controls.append(backBtn, searchInput);
-  mainContent.append(controls);
-
-  const title = document.createElement("h2");
-  title.textContent = "Here are my projects so far";
-  title.className = "text-2xl font-bold text-center text-gray-900";
-  mainContent.append(title);
-
-  const hr = document.createElement("hr");
-  hr.className = "border-t-2 border-gray-300 w-1/2 mt-0 mx-auto mb-5";
-  mainContent.append(hr);
-
-  const projectGrid = document.createElement("div");
-  projectGrid.className = `
-    grid 
-    grid-cols-1 
-    sm:grid-cols-2 
-    md:grid-cols-3 
-    lg:grid-cols-4 
-    gap-6
+  // Show loading screen
+  mainContent.innerHTML = `
+    <div id="loading" class="flex flex-col items-center justify-center py-20 text-gray-800">
+      <div class="animate-spin rounded-full h-12 w-12 border-4 border-blue-500 border-t-transparent mb-4"></div>
+      <p class="text-lg font-medium">Loading projects...</p>
+    </div>
   `;
-  mainContent.append(projectGrid);
 
-  // fetch and render projects
+  // Fetch and render projects
   (async () => {
     const res = await fetch(`${url}`);
     const allProjects = await res.json();
 
-    // initial render
+    // Clear loading screen
+    mainContent.innerHTML = "";
+
+    const controls = document.createElement("div");
+    controls.className = "flex justify-between items-center gap-4 flex-wrap";
+
+    const backBtn = document.createElement("button");
+    backBtn.textContent = "Back";
+    backBtn.className =
+      "px-4 py-2 bg-zinc-700 text-white rounded hover:bg-zinc-600";
+    backBtn.addEventListener("click", restoreProfileLayout);
+
+    const searchInput = document.createElement("input");
+    searchInput.placeholder = "Search projects...";
+    searchInput.className =
+      "flex-1 px-4 py-2 rounded bg-zinc-800 text-white border border-zinc-600";
+
+    controls.append(backBtn, searchInput);
+    mainContent.append(controls);
+
+    const title = document.createElement("h2");
+    title.textContent = "Here are my projects so far";
+    title.className = "text-2xl font-bold text-center text-gray-900";
+    mainContent.append(title);
+
+    const hr = document.createElement("hr");
+    hr.className = "border-t-2 border-gray-300 w-1/2 mt-0 mx-auto mb-5";
+    mainContent.append(hr);
+
+    const projectGrid = document.createElement("div");
+    projectGrid.className = `
+      grid 
+      grid-cols-1 
+      sm:grid-cols-2 
+      md:grid-cols-3 
+      lg:grid-cols-4 
+      gap-6
+    `;
+    mainContent.append(projectGrid);
+
+    // Initial render
     renderCards(allProjects);
 
-    // search filtering
+    // Search filtering
     searchInput.addEventListener("input", () => {
       const term = searchInput.value.toLowerCase().trim();
       const filtered = allProjects.filter((project) =>
@@ -199,6 +211,7 @@ function displayProjects() {
   })();
 }
 
+//show the profile when back button is clicked
 function restoreProfileLayout() {
   mainContent.className = `transition-opacity duration-500 opacity-100`;
   mainContent.innerHTML = "";

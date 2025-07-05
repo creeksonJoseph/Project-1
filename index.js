@@ -65,7 +65,7 @@ function showBigCard(project) {
             class="absolute top-6 left-6 px-4 py-2 bg-zinc-700 text-white rounded hover:bg-zinc-800 transition"
             id="backToProjects"
           >
-            ⬅️ Back
+            Back
           </button>
           <img 
             src="${data.image}" 
